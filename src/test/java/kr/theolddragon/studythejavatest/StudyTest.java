@@ -28,7 +28,9 @@ import org.junit.jupiter.api.condition.EnabledOnJre;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.JRE;
 import org.junit.jupiter.api.condition.OS;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.ParameterContext;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.aggregator.AggregateWith;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
@@ -46,6 +48,9 @@ class StudyTest {
 
   int value = 1;
 
+  @RegisterExtension
+  static FindSlowTestExtension findSlowTestExtension = new FindSlowTestExtension(1000L);
+
   @Order(2)
   @FastTest
   @DisplayName("스터디 만들기 fast")
@@ -60,7 +65,8 @@ class StudyTest {
   @Order(1)
   @SlowTest
   @DisplayName("스터디 만들기 slow")
-  void create_new_study_slow() {
+  void create_new_study_slow() throws InterruptedException {
+    Thread.sleep(1005L);
     System.out.println(this);
     System.out.println("create slow " + value++);
     Study study = new Study(10);
@@ -164,7 +170,8 @@ class StudyTest {
 
   @Test
   @EnabledOnOs(OS.WINDOWS)
-  void create_new_study_window() {
+  void create_new_study_window() throws InterruptedException {
+    Thread.sleep(1000L);
     System.out.println("test on window");
   }
 
