@@ -1,5 +1,6 @@
 package kr.theolddragon.studythejavatest;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import static org.junit.jupiter.api.Assumptions.assumingThat;
@@ -14,6 +15,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.junit.jupiter.api.condition.EnabledOnJre;
@@ -25,10 +27,27 @@ import org.junit.jupiter.api.condition.OS;
 class StudyTest {
 
   @Test
+  @DisplayName("스터디 만들기 fast")
+  @Tag("fast")
+  void create_new_study_fast() {
+    System.out.println("create fast");
+    Study study = new Study(10);
+    assertThat(study.getLimit()).isGreaterThan(0);
+  }
+
+  @Test
+  @DisplayName("스터디 만들기 slow")
+  @Tag("slow")
+  void create_new_study_slow() {
+    System.out.println("create slow");
+    Study study = new Study(10);
+    assertThat(study.getLimit()).isGreaterThan(0);
+  }
+
+
+  @Test
   @DisplayName("스터디 만들기 🚗")
   void create_new_study() {
-
-
     System.out.println("create");
     Study study = new Study(10);
     assertAll(
