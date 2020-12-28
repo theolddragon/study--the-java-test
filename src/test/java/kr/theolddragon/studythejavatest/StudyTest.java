@@ -26,18 +26,16 @@ import org.junit.jupiter.api.condition.OS;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class StudyTest {
 
-  @Test
+  @FastTest
   @DisplayName("스터디 만들기 fast")
-  @Tag("fast")
   void create_new_study_fast() {
     System.out.println("create fast");
     Study study = new Study(10);
     assertThat(study.getLimit()).isGreaterThan(0);
   }
 
-  @Test
+  @SlowTest
   @DisplayName("스터디 만들기 slow")
-  @Tag("slow")
   void create_new_study_slow() {
     System.out.println("create slow");
     Study study = new Study(10);
