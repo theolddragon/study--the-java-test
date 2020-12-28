@@ -18,11 +18,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.RepetitionInfo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.junit.jupiter.api.condition.EnabledOnJre;
 import org.junit.jupiter.api.condition.EnabledOnOs;
@@ -43,10 +46,12 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @TestInstance(Lifecycle.PER_CLASS)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class StudyTest {
 
   int value = 1;
 
+  @Order(2)
   @FastTest
   @DisplayName("스터디 만들기 fast")
   void create_new_study_fast() {
@@ -57,6 +62,7 @@ class StudyTest {
     System.out.println(study);
   }
 
+  @Order(1)
   @SlowTest
   @DisplayName("스터디 만들기 slow")
   void create_new_study_slow() {
@@ -67,6 +73,7 @@ class StudyTest {
     System.out.println(study);
   }
 
+  @Order(3)
   @DisplayName("스터디 만들기 반복")
   @RepeatedTest(value = 10, name = "{displayName}, {currentRepetition}/{totalRepetitions}")
   void repeat_new_study(RepetitionInfo repetitionInfo) {
@@ -74,6 +81,7 @@ class StudyTest {
         .getTotalRepetitions());
   }
 
+  @Order(4)
   @DisplayName("스터디 만들기 매개변수")
   @ParameterizedTest(name = "{index} {displayName} message={0}")
   @ValueSource(strings = {"날씨가", "많이", "추워지고", "있네요"})
